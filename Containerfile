@@ -10,11 +10,6 @@ LABEL com.github.containers.toolbox="true" \
 
 COPY scripts /tmp/scripts
 
-COPY --from=cgr.dev/chainguard/kubectl:latest /usr/bin/kubectl /usr/bin/kubectl
-COPY --from=cgr.dev/chainguard/flux:latest /usr/bin/flux /usr/bin/flux
-COPY --from=cgr.dev/chainguard/helm:latest /usr/bin/helm /usr/bin/helm
-COPY --from=cgr.dev/chainguard/ko:latest /usr/bin/ko /usr/bin/ko
-COPY --from=cgr.dev/chainguard/minio-client:latest /usr/bin/mc /usr/bin/mc
 COPY extra-packages /
 RUN chmod +x /tmp/scripts/pre.sh && \
         /tmp/scripts/pre.sh && \
@@ -24,5 +19,7 @@ RUN chmod +x /tmp/scripts/pre.sh && \
         
 RUN rm /extra-packages
 RUN ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \ 
-      ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree
+      ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree && \
+      ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
+      ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/podman 
      
